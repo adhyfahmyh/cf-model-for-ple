@@ -4,8 +4,11 @@ from scipy.sparse import csr_matrix
 from sklearn.metrics.pairwise import pairwise_distances
 
 # import data
+# ratings = pd.read_csv('rtg.csv')
+# ratingss = ratings.head()
 ratings = pd.read_csv('rtg.csv')
 # import kolom ke variabel
+# weight = ratingss[['userId', 'movieId', 'S']]
 weight = ratings[['userId', 'movieId', 'S']]
 # plot isi data ke matrix
 llor = weight.pivot(index='userId', columns='movieId', values='S').fillna(0)
@@ -34,3 +37,4 @@ for idx_user in range(pred_ratings.shape[0]):
         # hitung nilai prediksi untuk user idx_user terhadap objek idx_object
         average_rating_user = llor_array[idx_user,:].mean()
         pred_ratings[idx_user, idx_object] = average_rating_user + (np.sum(selected_similar * (rating_similar_user[:,idx_object] - average_similar_rating)) / np.sum(np.abs(selected_similar)))
+        print ("user ke - ", idx_user, "objek ke - ", idx_object, "hasil", pred_ratings)
