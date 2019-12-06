@@ -1,9 +1,0 @@
-email: help@ple.web.id
-password: N7YNoCXAWQ^?
-
-user n pass wp-admin
-user: admin
-pass: $E5Q#@5pY3
-
-user: plewebid
-pass: *kPa5sFf)761IH
