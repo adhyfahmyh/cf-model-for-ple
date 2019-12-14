@@ -8,6 +8,7 @@ from sklearn.metrics import mean_absolute_error
 from correlation_pearson.code import CorrelationPearson
 pearson = CorrelationPearson()
 import operator
+import csv
 
 # Import data
 raw = pd.read_csv('demo_sidang.csv', delimiter=';')
@@ -39,7 +40,6 @@ C = normalize(c)
 # Weight Learning Object
 e = E
 i = A + ((2)*(B)) + ((2)*(C)*(E))
-print(i)
 S = (1/2)*(e+i)
 
 user_id = raw[['user_id']]
@@ -58,7 +58,6 @@ weight = joinraw[['user_id', 'content_id', 'S']]
 llor = weight.pivot_table(index='user_id', columns='content_id', values='S').fillna(0)
 llor_matrix = csr_matrix(llor.values)
 llor_array = llor.values
-print(llor)
 
 # Similarities
 dict_x={}
@@ -117,3 +116,21 @@ llop = final_score_df.pivot_table(index='user_id', columns='content_id', values=
 # Data Final
 final_seq_df = pd.DataFrame(final_seq,columns=["user_id","Recommendation Sequence"])
 # print(final_seq_df)
+y_true = pivot_raw.values   
+y_pred = llop.values
+a = np.reshape(y_true,(-1))
+b = np.reshape(y_pred,(-1))
+MAE = mean_absolute_error(a, b)
+
+with open('K-10.csv', mode='w', newline='') as csv_file:
+    fieldnames = ['nilai_rating', 'nilai_prediksi', 'nilai_MAE']
+    writer = csv.DictWriter(csv_file, fieldnames=fieldnames)
+
+    
+    writer.writeheader()
+    writer.writerow({'nilai_MAE': MAE})
+    for i in range(len(a)):
+        writer.writerow({'nilai_rating': a[i], 'nilai_prediksi': b[i]})
+
+# print(len(a))
+print(MAE)
