@@ -35,11 +35,14 @@ normalize = lambda x : ((x - np.min(x))/(np.max(x)-np.min(x)))
 A = normalize(a)
 B = normalize(b)
 C = normalize(c)
+# print ((A.max()-A.min()))
+# print ((B.max()-B.min()))
+# print ((B.max()-B.min()))
 
 # Weight Learning Object
 e = E
 i = A + ((2)*(B)) + ((2)*(C)*(E))
-print(i)
+# print(i)
 S = (1/2)*(e+i)
 
 user_id = raw[['user_id']]
@@ -58,7 +61,7 @@ weight = joinraw[['user_id', 'content_id', 'S']]
 llor = weight.pivot_table(index='user_id', columns='content_id', values='S').fillna(0)
 llor_matrix = csr_matrix(llor.values)
 llor_array = llor.values
-print(llor)
+# print(llor)
 
 # Similarities
 dict_x={}
